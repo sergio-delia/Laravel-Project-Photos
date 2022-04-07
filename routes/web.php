@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::get('/hello/{p1}/{p2}', function ($param, $param2) {
@@ -38,4 +38,13 @@ Route::get('/hello-controller-query-string', 'MyFirstController@indexWithQuerySt
 //Route::get('/photos', 'Admin\PhotoController@index');
 //Route::post('/photos', 'Admin\PhotoController@store');
 
-Route::resource('/photos', 'Admin\PhotoController');
+// Route::resource('/photos', 'Admin\PhotoController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('admin')->namespace('Admin')->middleware('auth')->group(function () {
+
+    Route::resource('photos', 'PhotoController');
+   
+});
